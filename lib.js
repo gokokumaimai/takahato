@@ -1,38 +1,28 @@
 function easing(x) {
-  return sqrt(1 - (x - 1) ** 2);
+  return 1 - (x - 1) ** 4;
 }
 
 class Creature {
   constructor() {
-    // 画面中央
     this.p = createVector(windowWidth / 2, windowHeight / 2);
     this.path = [];
-    this.wait = [];
   }
-  move() {
-    if (this.path.length > 0) {
-      // １フレーム移動
-      this.p = this.path.shift();
-      this.wait.push(this.p);
-    } else if (this.wait.length > 0) {
-      // その場で待つ
-      this.wait.shift();
-    } else {
-      // STEPフレームの移動を決める
-      const x = random(R, windowWidth - R);
-      const y = random(R, windowHeight - R);
-      const q = createVector(x, y);
-      for (let i = 1; i <= STEP; i++) {
-        const x = i / STEP;
+  update() {
+    if (this.path.length === 0 && random() < 0.03) {
+      const q = createVector(random(windowWidth - 2 * R) + R, random(windowHeight - 2 * R) + R);
+      for (let i = 0; i < STEP; i++) {
+        const x = (i + 1) / STEP;
         this.path.push(p5.Vector.lerp(this.p, q, easing(x)));
       }
     }
   }
-  draw() {
-    line(0, 0, this.p.x, this.p.y);
-    for (const w of this.wait) {
-      circle(w.x, w.y, 100);
+  move() {
+    if (this.path.length > 0) {
+      this.p = this.path.shift();
     }
-    circle(this.p.x, this.p.y, 100);
+  }
+  draw() {
+    circle(this.p.x, this.p.y, 50);
+    line(0, 0, this.p.x, this.p.y);
   }
 }

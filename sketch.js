@@ -1,7 +1,6 @@
 // タカハトゲームのシミュレータ
 const STEP = 30;
 const R = 50;
-const MAX_WAIT = 30;
 
 let creature;
 
@@ -11,7 +10,8 @@ function setup() {
 }
 
 function draw() {
-  background(255);
+  background('skyblue');
+  creature.update();
   creature.move();
   creature.draw();
 }

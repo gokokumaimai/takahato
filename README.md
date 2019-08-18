@@ -1,2 +1,2 @@
 ## demo
-https://tamura2004.github.io/takahato/
+https://gokokumaimai.github.io/takahato/
